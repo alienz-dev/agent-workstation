@@ -1,0 +1,17 @@
+pre-commit:
+  parallel: true
+  commands:
+    typecheck:
+      glob: "*.{ts,tsx}"
+      run: npx turbo typecheck
+    affected-tests:
+      glob: "*.{ts,tsx}"
+      run: |
+        CHANGED=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.tsx?$')
+        TESTS=$(echo "$CHANGED" | sed 's/\.ts$/.test.ts/' | while read f; do [ -f "$f" ] && echo "$f"; done)
+        if [ -n "$TESTS" ]; then
+          npx vitest run $TESTS --reporter=dot
+        fi
+    lint:
+      glob: "*.{ts,tsx}"
+      run: npx eslint {staged_files} --max-warnings 0
