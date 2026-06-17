@@ -324,4 +324,4 @@ These criteria augment the tasks above based on bugs encountered in sessiond (v0
 | 5.4.5 | MCP tool: aw_issue_create | Create issue |
 | 5.4.6 | MCP tool: aw_pipeline_advance | Advance pipeline with evidence |
 
-This enables IDE integration (Cursor, Continue, Claude Desktop) without requiring Zellij.
+This enables IDE-initiated operations (trigger spawns from Cursor/Continue/Claude Desktop). Agents STILL run in Zellij panes — MCP is a remote trigger, not a replacement for the execution environment.

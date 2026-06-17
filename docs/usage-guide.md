@@ -128,7 +128,7 @@ Agent Workstation exposes tools via MCP so that ANY MCP-compatible agent can use
 | `aw_release_file` | Release file claim |
 | `aw_send_message` | Send message to another agent |
 
-This means Claude Desktop, Cursor, Continue, or any MCP client can orchestrate via agent-workstation without Zellij.
+This means Claude Desktop, Cursor, Continue, or any MCP client can TRIGGER operations. Agents still execute in Zellij panes — MCP is a remote control, not a replacement. Zellij is required for agent execution.
 
 ### 3. HTTP API (daemon)
 
@@ -215,7 +215,7 @@ Both: share .agents/workstation.db (via git) → heuristics accumulate
 ```
 VS Code + Continue extension → MCP server → aw mcp-server
 User: "fix the auth bug"
-Continue → calls aw_spawn tool → agent runs → result displayed in IDE
+Continue → calls aw_spawn tool → daemon spawns agent in Zellij pane → result returned to IDE
 ```
 
 ### Scenario D: CI gate enforcement
@@ -260,3 +260,34 @@ aw doctor                           # verify everything works
 
 Methodology docs update automatically (bundled in package).
 DB migrations are forward-compatible (new columns nullable, never drop).
+
+---
+
+## Why Zellij Is Required (Not Optional)
+
+Zellij is the **execution substrate**, not a nice-to-have:
+
+| What Zellij Provides | Why It Matters |
+|---------------------|---------------|
+| Process isolation | Each agent = separate pane. Crash doesn't kill others. |
+| User visibility | Switch tabs to watch any agent work in real-time |
+| User intervention | Type into an agent's pane to correct/guide it |
+| TRIO observability | See test-manager, coder, reviewer running simultaneously |
+| Notification injection | `[system] [DONE]` injected into parent pane |
+| Lifecycle detection | Daemon detects pane close → triggers result collection |
+| No stdin conflicts | Each pane has its own stdin/stdout (no multiplexing bugs) |
+
+**The human stays in the loop** — you can:
+- Watch a coder struggle and kill it early
+- See a test-manager writing wrong tests and intervene
+- Approve a reviewer's verdict by reading its tab
+- Switch to any agent tab and type additional context
+
+**MCP/HTTP are remote triggers only** — they say "start this", but the work ALWAYS happens in a Zellij pane where the user can observe it.
+
+```
+MCP call → aw daemon → Zellij pane (agent runs here, visible to user)
+CLI call → aw daemon → Zellij pane (same)
+```
+
+Without Zellij: no panes, no isolation, no visibility, no TRIO.
