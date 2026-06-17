@@ -2,45 +2,34 @@
 
 ## What This Is
 
-A unified platform consolidating all agent-infrastructure tooling into a single coherent system. Built on top of `kiro-sessiond` (daemon) and `dev-kit` (methodology/workflows) as foundational dependencies.
+Orchestration platform for AI coding agents. Hosts kiro/aider/claude-code in Zellij panes. NOT a coding agent itself — no LLM loop, no tool execution.
 
 ## Ubiquitous Language
 
 | Term | Definition |
 |------|-----------|
-| Workstation | The consolidated platform — one install, all agent capabilities |
-| Session | A bounded work context managed by sessiond (daemon process) |
-| Agent | An AI entity with a role, model, tools, and constraints |
-| Crew | A set of agents collaborating on a project within a session |
-| Orchestrator | An agent that spawns/coordinates other agents (planner, sprint-manager) |
-| Worker | An agent that executes tasks (coder, researcher, reviewer) |
-| Pipeline | FSM-enforced workflow: plan → test → sprint → review → done |
-| SDD | Spec-Driven Development — write spec + tests before code |
-| TRIO | Test-Red-Implement-Observe — the execution cycle |
-| Briefing | Context package given to a spawned agent (inline + read directives) |
-| Gate | Verification checkpoint that must pass before pipeline advances |
-| Heuristic | Learned agent behavior pattern stored for future sessions |
-| Skill | Attachable knowledge module that extends agent capabilities |
-| Hot Memory | Per-workspace curated context loaded into every agent session |
+| Workstation | This platform — orchestration + methodology in one repo |
+| Daemon | Python process (packages/daemon) managing Zellij pane lifecycle |
+| Adapter | Module that knows how to launch a specific agent CLI |
+| Briefing | Markdown file prepared for an agent (task + context + constraints) |
+| Result | Markdown file an agent writes on completion (Status + Summary + Evidence) |
+| Pipeline | FSM: plan → test → sprint → review → done |
+| Gate | Verification checkpoint (exit code 0 from a command) |
+| Constitution | Project config (.agents/constitution.yml) defining workflow + policies |
+| Heuristic | Learned pattern from past sessions (trigger → action) |
+| DAG Dispatch | Task scheduling based on dependency graph, not rigid waves |
+| File Claim | Exclusive write access to a path (prevents parallel agent conflicts) |
+| Information Barrier | Coders never see specs — tests ARE the spec |
+| Blast Radius | How risky a change is (determines review tier) |
 
-## Existing Components (Current State)
+## Technical Constraints
 
-| Component | Repo | Status | Role |
-|-----------|------|--------|------|
-| kiro-sessiond | ~/projects/kiro-sessiond | Production | Daemon: agent registry, message queue, file claims, lifecycle |
-| dev-kit | ~/projects/dev-kit | Production | Methodology: SDD, TRIO, pipeline, roles, templates, quality gates |
-| krew-cli | ~/projects/krew-cli | Production | Orchestration CLI: plans, agents, heuristics, sessions, DB |
-| kong | ~/projects/kong | v0.3.0 | Native coding agent platform — API-first, TUI-native |
-| issue-tracker | ~/projects/dev-kit/tools/issue-cli | Production | Markdown-first issue management with SQLite + Supabase |
-| knowledge-hub | ~/projects/knowledge-hub | Scaffolded | Knowledge graph engine for AI agents |
-| browser-cli | ~/work-enhancement/browser-cli | v2.0.0 | Browser automation via CDP |
-| web-agent | ~/projects/web-agent | Active | Web research agent |
-| forge | ~/projects/forge | Ready | Self-hosted DevOps (Gitea+Plane+BookStack+Authentik) |
-| knowledge-graph | ~/work-enhancement/knowledge-graph | Active | Vault semantic search + graph queries |
-
-## Dependencies (Fixed)
-
-- **kiro-sessiond** — daemon layer (Python, aiohttp). Agent lifecycle, message routing, file claims.
-- **dev-kit** — workflow/methodology layer. SDD, TRIO, pipeline FSM, agent roles, quality gates.
-
-Both are updatable but treated as foundation — workstation builds ON TOP, not replacing.
+- Node 22+ (ESM only)
+- Python 3.10+ (daemon only)
+- SQLite (better-sqlite3 + drizzle-orm) — per-project at .agents/workstation.db
+- Turborepo monorepo
+- vitest (threads only, never forks)
+- citty for CLI
+- p-graph for DAG execution
+- aiohttp for daemon HTTP server
+- SQLite FTS5 for search/matching
