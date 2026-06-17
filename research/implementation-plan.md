@@ -310,3 +310,18 @@ These criteria augment the tasks above based on bugs encountered in sessiond (v0
 - Goal system (persistent goals surviving session restart)
 - Dynamic re-planning mid-execution
 - OS-level sandboxing (Landlock)
+
+---
+
+## Phase 5 Addition: MCP Server (Wave 5.4)
+
+| Task | Objective | Acceptance Criteria |
+|------|-----------|-------------------|
+| 5.4.1 | MCP server command | `aw mcp-server` starts stdio MCP server exposing workstation tools |
+| 5.4.2 | MCP tool: aw_spawn | Spawn agent via MCP tool call |
+| 5.4.3 | MCP tool: aw_status | Return active agents + pipeline state |
+| 5.4.4 | MCP tool: aw_knowledge_search | Search knowledge base |
+| 5.4.5 | MCP tool: aw_issue_create | Create issue |
+| 5.4.6 | MCP tool: aw_pipeline_advance | Advance pipeline with evidence |
+
+This enables IDE integration (Cursor, Continue, Claude Desktop) without requiring Zellij.
