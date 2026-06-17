@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){var p=localStorage.getItem('kiro-theme-pref')||'auto';var h=new Date().getHours();var t=p==='auto'?((h>=6&&h<20)?'light':'dark'):p;document.documentElement.setAttribute('data-theme',t);})();</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Workstation</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+    :root {
+        --bg: #1a1a2e; --surface: #16213e;
+        --surface-el: #1f3056;
+        --fg: #e8e6e3; --fg-muted: #a8a5a0;
+        --accent: #4fc3f7; --accent-hover: #81d4fa;
+        --accent-subtle: rgba(79,195,247,0.08);
+        --success: #66bb6a; --warning: #ffa726; --error: #ef5350;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+        --shadow-md: 0 4px 12px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.1);
+        --shadow-lg: 0 12px 40px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.1);
+        --radius-sm: 6px; --radius-md: 12px; --radius-lg: 20px;
+    }
+    [data-theme="light"] {
+        --bg: #faf8f5; --surface: #ffffff;
+        --surface-el: #ffffff;
+        --fg: #1a1817; --fg-muted: #4d4a47;
+        --accent: #0277bd; --accent-hover: #01579b;
+        --accent-subtle: rgba(2,119,189,0.06);
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.06); --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+        --shadow-lg: 0 12px 40px rgba(0,0,0,0.1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.7;
+        background: var(--bg); color: var(--fg); -webkit-font-smoothing: antialiased; }
+    .container { max-width: 900px; margin: 0 auto; padding: 48px 24px 96px; }
+    .hero { text-align: center; padding: 96px 32px 80px; margin: -48px -24px 64px;
+        background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+        border-bottom: 1px solid var(--accent-subtle); position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+        background: radial-gradient(circle at 30% 50%, var(--accent-subtle) 0%, transparent 50%); pointer-events: none; }
+    .hero h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -0.03em;
+        line-height: 1.1; color: var(--fg); margin-bottom: 16px; position: relative; }
+    .hero .subtitle { font-size: 1.25rem; color: var(--fg-muted); font-weight: 400;
+        max-width: 600px; margin: 0 auto; line-height: 1.5; position: relative; }
+    .hero .badge { display: inline-block; padding: 6px 16px; background: var(--accent-subtle);
+        color: var(--accent); border-radius: 100px; font-size: 0.75rem; font-weight: 600;
+        letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 24px; position: relative; }
+    .section { margin-bottom: 64px; opacity: 0; transform: translateY(20px);
+        animation: fadeUp 0.6s cubic-bezier(0, 0, 0.2, 1) forwards; }
+    .section:nth-child(2) { animation-delay: 0.08s; }
+    .section:nth-child(3) { animation-delay: 0.16s; }
+    .section:nth-child(4) { animation-delay: 0.24s; }
+    .section:nth-child(5) { animation-delay: 0.32s; }
+    .section:nth-child(6) { animation-delay: 0.4s; }
+    .section:nth-child(7) { animation-delay: 0.48s; }
+    .section:nth-child(8) { animation-delay: 0.56s; }
+    .section:nth-child(9) { animation-delay: 0.64s; }
+    .section:nth-child(10) { animation-delay: 0.72s; }
+    .section:nth-child(11) { animation-delay: 0.8s; }
+    .section:nth-child(12) { animation-delay: 0.88s; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    h2 { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; margin-bottom: 16px; }
+    h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 12px; }
+    p { color: var(--fg-muted); margin-bottom: 16px; line-height: 1.7; }
+    p:last-child { margin-bottom: 0; }
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 24px; }
+    .metric-card { background: var(--surface); border-radius: var(--radius-md); padding: 28px 20px;
+        text-align: center; box-shadow: var(--shadow-sm); border-top: 3px solid var(--accent);
+        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s cubic-bezier(0.4,0,0.2,1); }
+    .metric-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .metric-value { font-size: 2.25rem; font-weight: 900; letter-spacing: -0.02em; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+    .metric-label { font-size: 0.8rem; color: var(--fg-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+    .timeline { position: relative; padding-left: 48px; }
+    .timeline::before { content: ''; position: absolute; left: 15px; top: 24px; bottom: 24px; width: 2px;
+        background: linear-gradient(to bottom, var(--accent), var(--accent-subtle)); border-radius: 2px; }
+    .timeline-item { position: relative; margin-bottom: 40px; padding: 20px 24px; background: var(--surface);
+        border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s cubic-bezier(0.4,0,0.2,1); }
+    .timeline-item:hover { transform: translateX(4px); box-shadow: var(--shadow-md); }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-item::before { content: ''; position: absolute; left: -41px; top: 24px; width: 14px; height: 14px;
+        border-radius: 50%; background: var(--bg); border: 3px solid var(--accent);
+        box-shadow: 0 0 0 4px var(--accent-subtle), 0 0 12px var(--accent-subtle); }
+    .timeline-item::after { content: ''; position: absolute; left: -27px; top: 30px; width: 18px; height: 2px;
+        background: var(--accent-subtle); }
+    .timeline-item h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; color: var(--accent); }
+    .timeline-item p { font-size: 0.9rem; color: var(--fg-muted); margin: 0; line-height: 1.6; }
+    .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+    .comparison-col { background: var(--surface); border-radius: var(--radius-md); padding: 28px; box-shadow: var(--shadow-sm); }
+    .comparison-col h3 { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+        margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--accent); }
+    .comparison-col.negative h3 { border-color: var(--error); }
+    .comparison-col ul { list-style: none; padding: 0; }
+    .comparison-col li { padding: 8px 0 8px 20px; position: relative; font-size: 0.9rem; color: var(--fg-muted); }
+    .comparison-col li::before { content: '\2713'; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+    .comparison-col.negative li::before { content: '\2717'; color: var(--error); }
+    .code-block { position: relative; margin: 16px 0; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+    .code-lang { position: absolute; top: 12px; right: 12px; background: var(--accent); color: #fff;
+        padding: 3px 10px; border-radius: 100px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
+    pre { background: var(--surface); padding: 24px; overflow-x: auto; margin: 0; border: 1px solid var(--accent-subtle); border-radius: var(--radius-md); }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--fg); line-height: 1.7; }
+    code .kw { color: #c792ea; } code .str { color: #c3e88d; } code .num { color: #f78c6c; }
+    code .cm { color: #546e7a; font-style: italic; } code .fn { color: #82aaff; }
+    code .op { color: #89ddff; } code .type { color: #ffcb6b; } code .attr { color: #4fc3f7; }
+    [data-theme="light"] code .kw { color: #7c4dff; } [data-theme="light"] code .str { color: #2e7d32; }
+    [data-theme="light"] code .num { color: #e65100; } [data-theme="light"] code .cm { color: #90a4ae; }
+    [data-theme="light"] code .fn { color: #1565c0; } [data-theme="light"] code .op { color: #0277bd; }
+    [data-theme="light"] code .type { color: #f57f17; } [data-theme="light"] code .attr { color: #00838f; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9rem;
+        border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+    th, td { padding: 14px 18px; text-align: left; }
+    th { background: var(--surface-el); font-weight: 600; font-size: 0.8rem; text-transform: uppercase;
+        letter-spacing: 0.05em; color: var(--fg-muted); border-bottom: 2px solid var(--accent-subtle); }
+    td { background: var(--surface); border-bottom: 1px solid var(--accent-subtle); color: var(--fg-muted); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--accent-subtle); }
+    .callout { padding: 20px 24px; border-radius: var(--radius-md); border-left: 4px solid;
+        background: var(--surface); box-shadow: var(--shadow-sm); }
+    .callout-info { border-color: var(--accent); }
+    .callout-warning { border-color: var(--warning); }
+    .callout-success { border-color: var(--success); }
+    .callout-error { border-color: var(--error); }
+    .callout p { margin: 0; font-size: 0.9rem; }
+    ul, ol { padding-left: 24px; color: var(--fg-muted); }
+    li { margin: 8px 0; line-height: 1.6; }
+    .diagram-container { background: var(--surface); border-radius: var(--radius-lg); padding: 48px 32px;
+        box-shadow: var(--shadow-md); text-align: center; border: 1px solid var(--accent-subtle); overflow-x: auto; }
+    .diagram-container .mermaid { display: flex; justify-content: center; }
+    .diagram-container .mermaid svg { max-width: 100%; height: auto; }
+    pre.mermaid { background: none !important; border: none !important; padding: 0 !important; box-shadow: none !important; }
+    .mermaid .node rect, .mermaid .node polygon { rx: 12; ry: 12; }
+    .mermaid .edgeLabel { font-size: 12px; }
+    .highlighted > rect, .highlighted > polygon { stroke-width: 3px !important; filter: drop-shadow(0 0 8px var(--accent)); }
+    svg { max-width: 100%; height: auto; }
+    pre.mermaid { background: none !important; border: none !important; padding: 0 !important; box-shadow: none !important; }
+    .theme-toggle { position: fixed; top: 20px; right: 20px; background: var(--surface);
+        border: 1px solid var(--accent-subtle); color: var(--fg); width: 40px; height: 40px;
+        border-radius: 50%; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center;
+        justify-content: center; box-shadow: var(--shadow-sm); transition: transform 0.2s, box-shadow 0.2s; z-index: 100; }
+    .theme-toggle:hover { transform: scale(1.1); box-shadow: var(--shadow-md); }
+    </style>
+</head>
+<body>
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">&#127769;</button>
+<div class="container"><div class="hero"><div class="badge">Platform</div><h1>Agent Workstation</h1><div class="subtitle">One install. One CLI. One DB. All agent capabilities. Any coding agent.</div></div><div class="section"><div class="metrics"><div class="metric-card"><div class="metric-value">3</div><div class="metric-label">Repos (Total Stack)</div></div><div class="metric-card"><div class="metric-value">39</div><div class="metric-label">EARS Criteria</div></div><div class="metric-card"><div class="metric-value">22+</div><div class="metric-label">Dev Cases Covered</div></div><div class="metric-card"><div class="metric-value">6</div><div class="metric-label">Repos Consolidated</div></div></div></div><div class="section"><h2>The Problem</h2><p>Today&#x27;s AI coding agent tooling is fragmented: 6+ repos, 3 databases, 4 CLIs, kiro-only. Developers juggle krew-cli for orchestration, kong for runtime, issue-tracker for issues, knowledge-graph for search — each with its own install, DB, and integration quirks. Agent Workstation unifies everything into a single coherent platform that works with ANY coding agent.</p></div><div class="section"><h2>Three-Repo Architecture</h2><div class="diagram-container"><pre class="mermaid">graph LR
+    N0(["agent-workstation<br/>TypeScript — Runtime + CLI + State"])
+    N1["kiro-sessiond<br/>Python — Daemon + Lifecycle"]
+    N2["dev-kit<br/>Docs — Methodology + Templates"]
+    N3["Developer"]
+    N4["Coding Agent"]
+    N3 -->|"aw CLI"| N0
+    N0 -->|"HTTP API"| N1
+    N0 -->|"briefing → result"| N4
+    N1 -->|"Zellij pane lifecycle"| N4
+    N2 -->|"templates at init"| N0
+    class N0 highlighted</pre></div></div><div class="section"><h2>How It Helps Developers</h2><p>Agent Workstation gives developers a complete AI-native development environment from a single CLI. Instead of learning 4+ tools and managing multiple databases, you get one unified interface that handles spawning agents, enforcing quality pipelines, tracking issues, learning from failures, and coordinating multi-agent work — all from your terminal.</p></div><div class="section"><h2>Developer Workflow: From Task to Done</h2><div class="timeline"><div class="timeline-item"><h3>1. aw init</h3><p>Scaffold project with SDD methodology, constitution, roles, and quality gates. One command sets up the full AI-native environment.</p></div><div class="timeline-item"><h3>2. aw spawn planner &quot;design feature X&quot;</h3><p>Planner agent writes spec with EARS acceptance criteria. Information barrier: coders never see the spec — tests ARE the spec.</p></div><div class="timeline-item"><h3>3. Pipeline: test → sprint → review</h3><p>Test-manager generates failing tests (RED gate). Sprint-manager dispatches coders in parallel waves. Reviewer does adversarial review.</p></div><div class="timeline-item"><h3>4. Quality gates enforce standards</h3><p>Machine-checkable gates at each transition. No agent claim without evidence. Pipeline blocks until verification command passes.</p></div><div class="timeline-item"><h3>5. aw heuristic — learn from failures</h3><p>Post-session reflection extracts lessons. Next session&#x27;s agents get relevant heuristics in their briefings. System gets smarter over time.</p></div></div></div><div class="section"><h2>Before vs After</h2><div class="comparison"><div class="comparison-col "><h3>With Agent Workstation</h3><ul><li>One CLI: aw spawn, aw plan, aw issue</li><li>One database per project (.agents/workstation.db)</li><li>Any coding agent (kiro, aider, claude-code, codex)</li><li>Pipeline-enforced quality (can&#x27;t skip gates)</li><li>Cross-session learning (heuristics)</li><li>Crash recovery (checkpoints + reconciliation)</li><li>DAG-based parallel dispatch</li></ul></div><div class="comparison-col negative"><h3>Without (Current State)</h3><ul><li>4+ CLIs: krew, kong, issue, kiro-ctl</li><li>3 separate databases (krew, issue, sessiond)</li><li>Locked to kiro-cli only</li><li>Advisory workflow (agents can skip)</li><li>Each session starts from zero</li><li>Daemon crash = state lost</li><li>Manual wave grouping</li></ul></div></div></div><div class="section"><h2>Runtime: How an Agent Executes</h2><div class="diagram-container"><pre class="mermaid">graph LR
+    N0["aw spawn coder"]
+    N1["Build Briefing<br/>task + context + heuristics"]
+    N2["sessiond<br/>policy check + spawn pane"]
+    N3(["Agent Loop<br/>LLM → tools → loop"])
+    N4(["Observation Masking<br/>50% cost reduction"])
+    N5["Checkpoint"]
+    N6["Result File<br/>Status + Evidence"]
+    N7["Gate Check<br/>machine-verifiable"]
+    N8["Pipeline Advance"]
+    N0 --> N1
+    N1 --> N2
+    N2 --> N3
+    N3 --> N4
+    N4 -->|"loop"| N3
+    N3 -->|"each turn"| N5
+    N3 -->|"done"| N6
+    N6 --> N7
+    N7 --> N8
+    class N3,N4 highlighted</pre></div></div><div class="section"><h2>What Gets Consolidated</h2><table><thead><tr><th>From</th><th>Capability</th><th>Into</th></tr></thead><tbody><tr><td>kong</td><td>Agent runtime (LLM loop, tools, streaming)</td><td>aw runtime</td></tr><tr><td>krew-cli</td><td>Plans, orchestration, heuristics, sessions</td><td>aw core</td></tr><tr><td>issue-tracker</td><td>Issue lifecycle, markdown + SQLite</td><td>aw plugin</td></tr><tr><td>knowledge-graph</td><td>Semantic search, vault RAG</td><td>aw plugin</td></tr><tr><td>browser-cli</td><td>CDP browser automation</td><td>aw plugin</td></tr><tr><td>web-agent</td><td>Web research + extraction</td><td>aw plugin</td></tr><tr><td>create-dev-kit</td><td>Project scaffolding</td><td>aw init</td></tr></tbody></table></div><div class="section"><h2>Agent-Agnostic Protocol</h2><p>Any coding agent that can read a markdown briefing and write a markdown result can participate. Native runtime (kong loop) for maximum integration, or adapters for external agents. Aider gets --message with the task. Claude-code gets --print. The pipeline doesn&#x27;t care what&#x27;s inside the pane — it only cares about the result file.</p></div><div class="section"><h2>Multi-Agent Coordination</h2><div class="diagram-container"><pre class="mermaid">graph LR
+    N0(["Planner<br/>writes spec"])
+    N1["Test Manager<br/>RED gate"]
+    N2(["Sprint Manager<br/>dispatches waves"])
+    N3["Coder A<br/>file-claim: src/auth/"]
+    N4["Coder B<br/>file-claim: src/api/"]
+    N5["Coder C<br/>file-claim: src/db/"]
+    N6(["Reviewer<br/>adversarial, different model"])
+    N0 -->|"spec ready"| N1
+    N1 -->|"tests ready"| N2
+    N2 --> N3
+    N2 --> N4
+    N2 --> N5
+    N3 -->|"result"| N2
+    N4 -->|"result"| N2
+    N5 -->|"result"| N2
+    N2 -->|"all GREEN"| N6
+    class N0,N2,N6 highlighted</pre></div></div><div class="section"><h2>Key Capabilities</h2><table><thead><tr><th>Feature</th><th>What It Does</th><th>Why It Matters</th></tr></thead><tbody><tr><td>Pipeline FSM</td><td>Enforces plan→test→sprint→review→done</td><td>Can&#x27;t skip quality steps</td></tr><tr><td>Information Barrier</td><td>Coders never see spec, tests ARE the spec</td><td>Forces test-driven implementation</td></tr><tr><td>Observation Masking</td><td>Replace consumed tool outputs with summaries</td><td>50% cost reduction, 2x session length</td></tr><tr><td>Heuristic Learning</td><td>Extract patterns from failures, inject into future briefings</td><td>Agents get smarter over time</td></tr><tr><td>File Claims</td><td>Exclusive write access per agent</td><td>No merge conflicts between parallel agents</td></tr><tr><td>Error Classification</td><td>Transient/permanent/budget/structural</td><td>Smart retry vs escalate vs stop</td></tr><tr><td>Crash Recovery</td><td>Checkpoint + reconcile on restart</td><td>Never lose work</td></tr><tr><td>DAG Dispatch</td><td>Start tasks as deps complete, don&#x27;t wait for full wave</td><td>Faster execution</td></tr><tr><td>Multi-Provider</td><td>Anthropic + OpenAI, automatic fallback</td><td>No single-provider dependency</td></tr><tr><td>MCP Tool Schemas</td><td>Zod → JSON Schema (MCP-compatible)</td><td>Ecosystem interop</td></tr></tbody></table></div><div class="section"><div class="callout callout-success"><p>Research validated: our architecture is ahead of the market on orchestration, pipeline enforcement, and multi-agent coordination. The gaps (observation masking, multi-provider, state persistence) are bounded additions, not redesigns.</p></div></div><div class="section"><h2>For Developers: What Changes</h2><p>Install agent-workstation globally. Run aw init in your project. You get: a coding agent that follows SDD methodology, enforces quality gates, learns from its mistakes, recovers from crashes, works with multiple LLM providers, and coordinates multi-agent plans — all from one aw command. No more juggling 4 CLIs. No more lost state. No more starting every session from scratch.</p></div><div class="section"><h2>Implementation Phases</h2><div class="timeline"><div class="timeline-item"><h3>Phase 1: Core Foundation</h3><p>Package structure, agent protocol types, session client, unified DB schema, plugin interface.</p></div><div class="timeline-item"><h3>Phase 2: Runtime</h3><p>Kong agent loop → @agent-workstation/runtime. Observation masking, multi-provider, checkpoints.</p></div><div class="timeline-item"><h3>Phase 3: Orchestration</h3><p>Plan system, heuristics, DAG dispatch, error classification, circuit breaker.</p></div><div class="timeline-item"><h3>Phase 4: Workflow &amp; Quality</h3><p>Pipeline FSM, configurable gates, SDD/TRIO enforcement, review tiers.</p></div><div class="timeline-item"><h3>Phase 5: Knowledge &amp; Plugins</h3><p>Issues, knowledge graph, browser, devops, remote sync.</p></div><div class="timeline-item"><h3>Phase 6: Agent Adapters</h3><p>Native (kong), kiro, aider, claude-code, generic file-based.</p></div></div></div></div>
+<script>
+function toggleTheme(){var c=localStorage.getItem('kiro-theme-pref')||'auto';var n=c==='auto'?'light':(c==='light'?'dark':'auto');localStorage.setItem('kiro-theme-pref',n);var h=new Date().getHours();var t=n==='auto'?((h>=6&&h<20)?'light':'dark'):n;document.documentElement.setAttribute('data-theme',t);document.querySelector('.theme-toggle').textContent=n==='auto'?'\u{1f504}':(n==='light'?'\u2600\ufe0f':'\u{1f319}');if(window.__reRenderMermaid)window.__reRenderMermaid(t!=='light');}
+document.querySelector('.theme-toggle').textContent=(localStorage.getItem('kiro-theme-pref')||'auto')==='auto'?'\u{1f504}':((localStorage.getItem('kiro-theme-pref')==='light')?'\u2600\ufe0f':'\u{1f319}');
+</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const darkVars = {
+    primaryColor: '#1f3056',
+    primaryTextColor: '#e8e6e3',
+    primaryBorderColor: '#4fc3f7',
+    lineColor: '#4fc3f7',
+    secondaryColor: '#16213e',
+    tertiaryColor: '#1a1a2e',
+    background: '#16213e',
+    mainBkg: '#1f3056',
+    nodeBorder: '#4fc3f7',
+    clusterBkg: '#1a1a2e',
+    titleColor: '#e8e6e3',
+    edgeLabelBackground: '#1a1a2e',
+    fontFamily: 'Inter, system-ui, sans-serif',
+    fontSize: '14px'
+};
+const lightVars = {
+    primaryColor: '#e3f2fd',
+    primaryTextColor: '#1a1817',
+    primaryBorderColor: '#0277bd',
+    lineColor: '#0277bd',
+    secondaryColor: '#ffffff',
+    tertiaryColor: '#faf8f5',
+    background: '#ffffff',
+    mainBkg: '#e3f2fd',
+    nodeBorder: '#0277bd',
+    clusterBkg: '#faf8f5',
+    titleColor: '#1a1817',
+    edgeLabelBackground: '#faf8f5',
+    fontFamily: 'Inter, system-ui, sans-serif',
+    fontSize: '14px'
+};
+const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+// Store original source before mermaid replaces content
+document.querySelectorAll('pre.mermaid').forEach(el => el.setAttribute('data-mermaid-src', el.textContent));
+mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: isDark ? darkVars : lightVars });
+window.__reRenderMermaid = async function(dark) {
+  mermaid.initialize({ startOnLoad: false, theme: 'base', themeVariables: dark ? darkVars : lightVars });
+  document.querySelectorAll('pre.mermaid, .mermaid[data-processed]').forEach(el => {
+    const src = el.getAttribute('data-mermaid-src');
+    if (!src) return;
+    el.removeAttribute('data-processed');
+    el.innerHTML = src;
+  });
+  await mermaid.run();
+};
+</script>
+</body></html>

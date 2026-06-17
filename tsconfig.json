@@ -1,0 +1,9 @@
+{
+  "references": [
+    { "path": "packages/core" },
+    { "path": "packages/cli" },
+    { "path": "packages/plugins" },
+    { "path": "packages/adapters" }
+  ],
+  "files": []
+}

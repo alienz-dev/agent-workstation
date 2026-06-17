@@ -1,0 +1,220 @@
+{
+  "title": "Agent Workstation",
+  "sections": [
+    {
+      "type": "hero",
+      "content": {
+        "badge": "Platform",
+        "title": "Agent Workstation",
+        "subtitle": "One install. One CLI. One DB. All agent capabilities. Any coding agent."
+      }
+    },
+    {
+      "type": "metrics",
+      "content": {
+        "items": [
+          {"value": "3", "label": "Repos (Total Stack)"},
+          {"value": "39", "label": "EARS Criteria"},
+          {"value": "22+", "label": "Dev Cases Covered"},
+          {"value": "6", "label": "Repos Consolidated"}
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "heading": "The Problem",
+      "content": "Today's AI coding agent tooling is fragmented: 6+ repos, 3 databases, 4 CLIs, kiro-only. Developers juggle krew-cli for orchestration, kong for runtime, issue-tracker for issues, knowledge-graph for search — each with its own install, DB, and integration quirks. Agent Workstation unifies everything into a single coherent platform that works with ANY coding agent."
+    },
+    {
+      "type": "diagram",
+      "heading": "Three-Repo Architecture",
+      "content": {
+        "nodes": [
+          {"label": "agent-workstation", "subtitle": "TypeScript — Runtime + CLI + State"},
+          {"label": "kiro-sessiond", "subtitle": "Python — Daemon + Lifecycle"},
+          {"label": "dev-kit", "subtitle": "Docs — Methodology + Templates"},
+          "Developer",
+          "Coding Agent"
+        ],
+        "edges": [
+          {"from": 3, "to": 0, "label": "aw CLI"},
+          {"from": 0, "to": 1, "label": "HTTP API"},
+          {"from": 0, "to": 4, "label": "briefing → result"},
+          {"from": 1, "to": 4, "label": "Zellij pane lifecycle"},
+          {"from": 2, "to": 0, "label": "templates at init"}
+        ],
+        "highlight_nodes": [0]
+      }
+    },
+    {
+      "type": "text",
+      "heading": "How It Helps Developers",
+      "content": "Agent Workstation gives developers a complete AI-native development environment from a single CLI. Instead of learning 4+ tools and managing multiple databases, you get one unified interface that handles spawning agents, enforcing quality pipelines, tracking issues, learning from failures, and coordinating multi-agent work — all from your terminal."
+    },
+    {
+      "type": "timeline",
+      "heading": "Developer Workflow: From Task to Done",
+      "content": {
+        "items": [
+          {"title": "1. aw init", "description": "Scaffold project with SDD methodology, constitution, roles, and quality gates. One command sets up the full AI-native environment."},
+          {"title": "2. aw spawn planner \"design feature X\"", "description": "Planner agent writes spec with EARS acceptance criteria. Information barrier: coders never see the spec — tests ARE the spec."},
+          {"title": "3. Pipeline: test → sprint → review", "description": "Test-manager generates failing tests (RED gate). Sprint-manager dispatches coders in parallel waves. Reviewer does adversarial review."},
+          {"title": "4. Quality gates enforce standards", "description": "Machine-checkable gates at each transition. No agent claim without evidence. Pipeline blocks until verification command passes."},
+          {"title": "5. aw heuristic — learn from failures", "description": "Post-session reflection extracts lessons. Next session's agents get relevant heuristics in their briefings. System gets smarter over time."}
+        ]
+      }
+    },
+    {
+      "type": "comparison",
+      "heading": "Before vs After",
+      "content": {
+        "left": {
+          "title": "With Agent Workstation",
+          "items": [
+            "One CLI: aw spawn, aw plan, aw issue",
+            "One database per project (.agents/workstation.db)",
+            "Any coding agent (kiro, aider, claude-code, codex)",
+            "Pipeline-enforced quality (can't skip gates)",
+            "Cross-session learning (heuristics)",
+            "Crash recovery (checkpoints + reconciliation)",
+            "DAG-based parallel dispatch"
+          ]
+        },
+        "right": {
+          "title": "Without (Current State)",
+          "items": [
+            "4+ CLIs: krew, kong, issue, kiro-ctl",
+            "3 separate databases (krew, issue, sessiond)",
+            "Locked to kiro-cli only",
+            "Advisory workflow (agents can skip)",
+            "Each session starts from zero",
+            "Daemon crash = state lost",
+            "Manual wave grouping"
+          ]
+        }
+      }
+    },
+    {
+      "type": "diagram",
+      "heading": "Runtime: How an Agent Executes",
+      "content": {
+        "nodes": [
+          "aw spawn coder",
+          {"label": "Build Briefing", "subtitle": "task + context + heuristics"},
+          {"label": "sessiond", "subtitle": "policy check + spawn pane"},
+          {"label": "Agent Loop", "subtitle": "LLM → tools → loop"},
+          {"label": "Observation Masking", "subtitle": "50% cost reduction"},
+          "Checkpoint",
+          {"label": "Result File", "subtitle": "Status + Evidence"},
+          {"label": "Gate Check", "subtitle": "machine-verifiable"},
+          "Pipeline Advance"
+        ],
+        "edges": [
+          {"from": 0, "to": 1},
+          {"from": 1, "to": 2},
+          {"from": 2, "to": 3},
+          {"from": 3, "to": 4},
+          {"from": 4, "to": 3, "label": "loop"},
+          {"from": 3, "to": 5, "label": "each turn"},
+          {"from": 3, "to": 6, "label": "done"},
+          {"from": 6, "to": 7},
+          {"from": 7, "to": 8}
+        ],
+        "highlight_nodes": [3, 4]
+      }
+    },
+    {
+      "type": "table",
+      "heading": "What Gets Consolidated",
+      "content": {
+        "headers": ["From", "Capability", "Into"],
+        "rows": [
+          ["kong", "Agent runtime (LLM loop, tools, streaming)", "aw runtime"],
+          ["krew-cli", "Plans, orchestration, heuristics, sessions", "aw core"],
+          ["issue-tracker", "Issue lifecycle, markdown + SQLite", "aw plugin"],
+          ["knowledge-graph", "Semantic search, vault RAG", "aw plugin"],
+          ["browser-cli", "CDP browser automation", "aw plugin"],
+          ["web-agent", "Web research + extraction", "aw plugin"],
+          ["create-dev-kit", "Project scaffolding", "aw init"]
+        ]
+      }
+    },
+    {
+      "type": "text",
+      "heading": "Agent-Agnostic Protocol",
+      "content": "Any coding agent that can read a markdown briefing and write a markdown result can participate. Native runtime (kong loop) for maximum integration, or adapters for external agents. Aider gets --message with the task. Claude-code gets --print. The pipeline doesn't care what's inside the pane — it only cares about the result file."
+    },
+    {
+      "type": "diagram",
+      "heading": "Multi-Agent Coordination",
+      "content": {
+        "nodes": [
+          {"label": "Planner", "subtitle": "writes spec"},
+          {"label": "Test Manager", "subtitle": "RED gate"},
+          {"label": "Sprint Manager", "subtitle": "dispatches waves"},
+          {"label": "Coder A", "subtitle": "file-claim: src/auth/"},
+          {"label": "Coder B", "subtitle": "file-claim: src/api/"},
+          {"label": "Coder C", "subtitle": "file-claim: src/db/"},
+          {"label": "Reviewer", "subtitle": "adversarial, different model"}
+        ],
+        "edges": [
+          {"from": 0, "to": 1, "label": "spec ready"},
+          {"from": 1, "to": 2, "label": "tests ready"},
+          {"from": 2, "to": 3},
+          {"from": 2, "to": 4},
+          {"from": 2, "to": 5},
+          {"from": 3, "to": 2, "label": "result"},
+          {"from": 4, "to": 2, "label": "result"},
+          {"from": 5, "to": 2, "label": "result"},
+          {"from": 2, "to": 6, "label": "all GREEN"}
+        ],
+        "highlight_nodes": [0, 2, 6]
+      }
+    },
+    {
+      "type": "table",
+      "heading": "Key Capabilities",
+      "content": {
+        "headers": ["Feature", "What It Does", "Why It Matters"],
+        "rows": [
+          ["Pipeline FSM", "Enforces plan→test→sprint→review→done", "Can't skip quality steps"],
+          ["Information Barrier", "Coders never see spec, tests ARE the spec", "Forces test-driven implementation"],
+          ["Observation Masking", "Replace consumed tool outputs with summaries", "50% cost reduction, 2x session length"],
+          ["Heuristic Learning", "Extract patterns from failures, inject into future briefings", "Agents get smarter over time"],
+          ["File Claims", "Exclusive write access per agent", "No merge conflicts between parallel agents"],
+          ["Error Classification", "Transient/permanent/budget/structural", "Smart retry vs escalate vs stop"],
+          ["Crash Recovery", "Checkpoint + reconcile on restart", "Never lose work"],
+          ["DAG Dispatch", "Start tasks as deps complete, don't wait for full wave", "Faster execution"],
+          ["Multi-Provider", "Anthropic + OpenAI, automatic fallback", "No single-provider dependency"],
+          ["MCP Tool Schemas", "Zod → JSON Schema (MCP-compatible)", "Ecosystem interop"]
+        ]
+      }
+    },
+    {
+      "type": "callout",
+      "content": {
+        "style": "success",
+        "text": "Research validated: our architecture is ahead of the market on orchestration, pipeline enforcement, and multi-agent coordination. The gaps (observation masking, multi-provider, state persistence) are bounded additions, not redesigns."
+      }
+    },
+    {
+      "type": "text",
+      "heading": "For Developers: What Changes",
+      "content": "Install agent-workstation globally. Run aw init in your project. You get: a coding agent that follows SDD methodology, enforces quality gates, learns from its mistakes, recovers from crashes, works with multiple LLM providers, and coordinates multi-agent plans — all from one aw command. No more juggling 4 CLIs. No more lost state. No more starting every session from scratch."
+    },
+    {
+      "type": "timeline",
+      "heading": "Implementation Phases",
+      "content": {
+        "items": [
+          {"title": "Phase 1: Core Foundation", "description": "Package structure, agent protocol types, session client, unified DB schema, plugin interface."},
+          {"title": "Phase 2: Runtime", "description": "Kong agent loop → @agent-workstation/runtime. Observation masking, multi-provider, checkpoints."},
+          {"title": "Phase 3: Orchestration", "description": "Plan system, heuristics, DAG dispatch, error classification, circuit breaker."},
+          {"title": "Phase 4: Workflow & Quality", "description": "Pipeline FSM, configurable gates, SDD/TRIO enforcement, review tiers."},
+          {"title": "Phase 5: Knowledge & Plugins", "description": "Issues, knowledge graph, browser, devops, remote sync."},
+          {"title": "Phase 6: Agent Adapters", "description": "Native (kong), kiro, aider, claude-code, generic file-based."}
+        ]
+      }
+    }
+  ]
+}

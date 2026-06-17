@@ -1,0 +1,24 @@
+{
+  "name": "@agent-workstation/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "aw": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsx src/index.ts",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@agent-workstation/core": "*",
+    "citty": "0.1.6"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3",
+    "vitest": "3.1.4",
+    "tsx": "4.19.4"
+  }
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.turbo/
+*.tsbuildinfo
+.agents/workstation.db
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/

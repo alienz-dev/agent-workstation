@@ -1,0 +1,31 @@
+{
+  "name": "agent-workstation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Orchestration platform for AI coding agents",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "workspaces": [
+    "packages/cli",
+    "packages/core",
+    "packages/plugins",
+    "packages/adapters"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "test": "turbo test",
+    "typecheck": "turbo typecheck",
+    "lint": "turbo lint",
+    "clean": "turbo clean"
+  },
+  "devDependencies": {
+    "turbo": "2.5.0",
+    "typescript": "5.8.3",
+    "eslint": "9.27.0",
+    "vitest": "3.1.4",
+    "@types/node": "22.15.21"
+  },
+  "packageManager": "npm@10.9.2"
+}

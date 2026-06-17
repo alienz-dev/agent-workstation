@@ -1,0 +1,23 @@
+{
+  "name": "@agent-workstation/core",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.38.4",
+    "better-sqlite3": "11.7.0",
+    "zod": "3.24.4"
+  },
+  "devDependencies": {
+    "typescript": "5.8.3",
+    "vitest": "3.1.4",
+    "@types/better-sqlite3": "7.6.13"
+  }
+}
