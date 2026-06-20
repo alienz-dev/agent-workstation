@@ -177,3 +177,17 @@ aw spawn coder "fix the auth bug"
 | Quality enforcement | Pipeline gates + information barrier + review tiers |
 | Research | `aw spawn researcher "investigate X"` |
 | New project | `aw init` → full SDD scaffold from methodology/ |
+
+### Design Pipeline (UI Tasks)
+
+37. WHEN spawning ui-designer role THE system SHALL load `DESIGN.md` from project root and `.interface-design/system.md` if present, including both as constraints in the briefing.
+
+38. WHEN a spawn config includes `reference` field THE system SHALL resolve the reference path and pass `--reference <path>` to design-grade.sh during gate evaluation.
+
+39. WHEN sprint-manager wave modifies UI files (.tsx, .jsx, .vue, .svelte, .css, .scss, .html) THE system SHALL run design gate (design-grade.sh) after GREEN gate passes.
+
+40. IF design gate scores total < 6.0 OR token_fidelity < 8 THEN THE system SHALL re-dispatch coder with grade feedback, up to max_visual_retries (default 2).
+
+41. WHERE `.agents/design/references/` contains HTML files THE system SHALL auto-match reference to task by filename convention (`<task-name>.html`) or use `default.html` as fallback.
+
+42. WHEN ui-designer completes THE system SHALL persist design decisions to `.interface-design/system.md` and updated tokens to project `DESIGN.md`.

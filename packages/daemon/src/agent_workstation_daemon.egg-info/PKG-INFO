@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: agent-workstation-daemon
+Version: 0.1.0
+Requires-Python: >=3.10
+Requires-Dist: aiohttp>=3.9.0
+Requires-Dist: click>=8.1.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-aiohttp>=1.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.23.0; extra == "dev"

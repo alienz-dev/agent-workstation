@@ -112,6 +112,36 @@ export interface AgentAdapter {
   parseResult(resultPath: string): AgentResult | null
 }
 
+// Issue types
+export type IssueState = 'open' | 'in-progress' | 'review' | 'done' | 'closed'
+export type IssuePriority = 'low' | 'medium' | 'high' | 'critical'
+export type IssueType = 'bug' | 'feature' | 'task' | 'epic'
+
+export interface Issue {
+  id: string
+  title: string
+  description: string
+  type: IssueType
+  state: IssueState
+  priority: IssuePriority
+  assignee?: string
+  labels: string[]
+  parent_id?: string
+  task_ids: string[]
+  agent_ids: string[]
+  created_at: number
+  updated_at: number
+  closed_at?: number
+  metadata: Record<string, unknown>
+}
+
+export interface IssueLink {
+  issue_id: string
+  target_type: 'task' | 'agent' | 'issue'
+  target_id: string
+  relation: 'blocks' | 'blocked-by' | 'related' | 'parent' | 'child'
+}
+
 // Events
 export type EventType =
   | 'agent.spawned'
@@ -121,6 +151,9 @@ export type EventType =
   | 'gate.failed'
   | 'message.sent'
   | 'error.classified'
+  | 'issue.opened'
+  | 'issue.updated'
+  | 'issue.closed'
 
 export interface WorkstationEvent {
   type: EventType

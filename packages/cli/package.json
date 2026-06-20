@@ -9,6 +9,7 @@
     "build": "tsc",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
     "dev": "tsx src/index.ts",
     "clean": "rm -rf dist"
   },

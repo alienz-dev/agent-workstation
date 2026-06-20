@@ -1,0 +1,12 @@
+[Unit]
+Description=Agent Workstation daemon for session %i
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/aw-daemon start --session %i
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

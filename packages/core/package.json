@@ -8,16 +8,18 @@
     "build": "tsc",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
+    "lint": "eslint src",
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "drizzle-orm": "0.38.4",
     "better-sqlite3": "11.7.0",
+    "drizzle-orm": "0.38.4",
+    "p-graph": "^2.0.0",
     "zod": "3.24.4"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "7.6.13",
     "typescript": "5.8.3",
-    "vitest": "3.1.4",
-    "@types/better-sqlite3": "7.6.13"
+    "vitest": "3.1.4"
   }
 }

@@ -1,0 +1,10 @@
+pyproject.toml
+src/agent_workstation_daemon.egg-info/PKG-INFO
+src/agent_workstation_daemon.egg-info/SOURCES.txt
+src/agent_workstation_daemon.egg-info/dependency_links.txt
+src/agent_workstation_daemon.egg-info/entry_points.txt
+src/agent_workstation_daemon.egg-info/requires.txt
+src/agent_workstation_daemon.egg-info/top_level.txt
+src/aw_daemon/__init__.py
+src/aw_daemon/main.py
+tests/test_placeholder.py

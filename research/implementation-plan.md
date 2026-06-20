@@ -325,3 +325,57 @@ These criteria augment the tasks above based on bugs encountered in sessiond (v0
 | 5.4.6 | MCP tool: aw_pipeline_advance | Advance pipeline with evidence |
 
 This enables IDE-initiated operations (trigger spawns from Cursor/Continue/Claude Desktop). Agents STILL run in Zellij panes — MCP is a remote trigger, not a replacement for the execution environment.
+
+---
+
+## Phase 1 Addendum: Design Pipeline (Wave 1.7)
+
+### Wave 1.7.4 augment — ui-designer role
+
+The ui-designer role definition (methodology/roles/ui-designer.md) MUST include:
+- Autonomous scoring loop: generate → screenshot → grade → iterate
+- Reference input support (`--reference <html|png>`)
+- Token fidelity enforcement against DESIGN.md
+- Design memory persistence to `.interface-design/system.md`
+- Pass/accept thresholds configurable via constitution.yml
+
+### Wave 1.7 NEW TASK — Design Gate
+
+| Task | Objective | Acceptance Criteria |
+|------|-----------|-------------------|
+| 1.7.8 | Design gate spec | methodology/quality/design-gate.md — defines visual QA gate with reference_alignment scoring, pass thresholds, retry behavior, constitution config |
+
+---
+
+## Phase 2 Addendum: Design Briefing (Wave 2.5)
+
+### Wave 2.5 augment — Briefing Builder design awareness
+
+| Task | Objective | Acceptance Criteria |
+|------|-----------|-------------------|
+| 2.5.5 | Design context injection | WHEN task type = UI AND project has DESIGN.md, briefing builder includes `## Design Contract` section with: DESIGN.md token subset, reference path (if exists), .interface-design/system.md decisions |
+| 2.5.6 | Reference resolution | Resolve reference from: spawn config > .agents/design/references/<task>.html > default.html > none. Include resolved path in briefing. |
+
+---
+
+## Phase 3 Addendum: Design Gate (Wave 3.2)
+
+### Wave 3.2 augment — Gate types
+
+| Task | Objective | Acceptance Criteria |
+|------|-----------|-------------------|
+| 3.2.4 | Design gate type | Gate runner supports `type: design`. Invokes design-grade.sh with --design-md and --reference. Parses JSON output. Evaluates thresholds from constitution. |
+| 3.2.5 | Reference directory | `aw init` creates `.agents/design/references/` directory. Sprint-manager checks this directory for auto-matched references when running visual QA. |
+
+---
+
+## Updated Summary
+
+| Phase | Tasks | Effort |
+|-------|-------|--------|
+| 1 — Foundation | 34 + 1 = 35 | 7-9 days |
+| 2 — Orchestration | 14 + 2 = 16 | 4-5 days |
+| 3 — Pipeline | 9 + 2 = 11 | 3-4 days |
+| 4 — Plugins | 8 | 3-4 days |
+| 5 — CLI & Adapters | 12 | 3-5 days |
+| **Total** | **82 tasks** | **~21-28 days** |
